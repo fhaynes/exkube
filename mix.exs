@@ -3,10 +3,9 @@ defmodule Exkube.Mixfile do
 
   def project do
     [app: :exkube,
-     version: "0.1.0",
+     version: "0.1.1",
      description: description(),
      package: package(),
-     links: links(),
      elixir: "~> 1.4",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
@@ -36,7 +35,8 @@ defmodule Exkube.Mixfile do
   defp deps do
     [
       {:httpoison, "~> 0.11.2"},
-      {:poison, "~> 3.1.0"}
+      {:poison, "~> 3.1.0"},
+      {:ex_doc, ">= 0.0.0", only: :dev}
     ]
   end
 
@@ -51,12 +51,13 @@ defmodule Exkube.Mixfile do
     [
       name: :exkube,
       maintainers: ["Fletcher Haynes <fletcher@unity3d.com>"],
-      licenses: ["Apache 2.0"]
+      licenses: ["Apache 2.0"],
+      links: links()
     ]
   end
 
   defp links do
-    %{}
+    %{"GitHub" => "https://github.com/fhaynes/exkube"}
   end
-  
+
 end

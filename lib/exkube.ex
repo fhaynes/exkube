@@ -23,7 +23,5 @@ defmodule Exkube.Base do
       _ ->
         {:error, %{status_code: status_code, body: body}}
     end
-
   end
-
 end
