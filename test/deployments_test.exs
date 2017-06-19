@@ -11,7 +11,7 @@ defmodule Exkube.DeploymentsTest do
     assert elem(result, 0) == :ok
   end
 
-  test "can create deployment", %{} do
+  test "can create and delete deployment", %{} do
     deployment = %{
       "name": "elixir-test-deployment",
       "labels": %{
@@ -35,19 +35,9 @@ defmodule Exkube.DeploymentsTest do
     }
     result = Deployments.create(deployment)
     assert elem(result, 0) == :ok
+
+    result = Deployments.delete("elixir-test-deployment")
+    assert elem(result, 0) == :ok
   end
-  #
-  # test "can get one namespace", %{} do
-  #   result = Namespaces.one(%{namespace: "uops"})
-  #   assert elem(result, 0) == :ok
-  # end
-  #
-  # test "can create and delete new namespace", %{} do
-  #   name = "test-" <> Integer.to_string(:rand.uniform(1000))
-  #   result = Namespaces.create(%{namespace: name})
-  #   assert elem(result, 0) == :ok
-  #   result = Namespaces.delete(%{namespace: name})
-  #   assert elem(result, 0) == :ok
-  # end
 
 end

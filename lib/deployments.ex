@@ -32,7 +32,9 @@ defmodule Exkube.Deployments do
   Lists all the Deployments in a specific Namespace
   """
   def all(namespace) do
-    {:ok, %HTTPoison.Response{status_code: status_code, body: body}} = Base.get("apis/apps/v1beta1/namespaces/" <> namespace <> "/deployments")
+    {:ok, %HTTPoison.Response{status_code: status_code, body: body}} =
+      Base.get("apis/apps/v1beta1/namespaces/" <> namespace <> "/deployments")
+
     processed = Base.process_response_status_code(body, status_code)
 
     # We need to process the result a bit to extract only the Namespace names
@@ -57,7 +59,7 @@ defmodule Exkube.Deployments do
     {:ok, %HTTPoison.Response{status_code: status_code, body: body}} =
       Base.get("apis/apps/v1beta1/namespaces/" <> namespace <> "/deployments/" <> deployment)
 
-    processed = Base.process_response_status_code(body, status_code)
+    Base.process_response_status_code(body, status_code)
   end
 
   @doc """
@@ -87,7 +89,16 @@ defmodule Exkube.Deployments do
     {:ok, %HTTPoison.Response{status_code: status_code, body: body}} =
       Base.post("apis/apps/v1beta1/namespaces/" <> namespace <> "/deployments", body)
 
-    Logger.debug("Body is: " <> inspect(body))
-    processed = Base.process_response_status_code(body, status_code)
+    Base.process_response_status_code(body, status_code)
+  end
+
+  @doc """
+  Deletes one Deployment from a Namespace
+  """
+  def delete(deployment, namespace \\ "default") do
+    {:ok, %HTTPoison.Response{status_code: status_code, body: body}} =
+      Base.delete("apis/apps/v1beta1/namespaces/" <> namespace <> "/deployments/" <> deployment)
+
+    Base.process_response_status_code(body, status_code)
   end
 end
