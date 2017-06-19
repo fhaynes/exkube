@@ -2,7 +2,10 @@
 # and its dependencies with the aid of the Mix.Config module.
 use Mix.Config
 
-config :exkube, insecure_ca: :secure
+config :exkube, insecure_ca: :insecure,
+  kube_user: "admin",
+  kube_password: System.get_env("EXKUBE_PASSWORD"),
+  api_url: System.get_env("EXKUBE_API")
 # This configuration is loaded before any dependency and is restricted
 # to this project. If another project depends on this project, this
 # file won't be loaded nor affect the parent project. For this reason,
