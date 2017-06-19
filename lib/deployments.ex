@@ -57,19 +57,13 @@ defmodule Exkube.Deployments do
   def one(namespace \\ "default") do
     {:ok, %HTTPoison.Response{status_code: status_code, body: body}} =
       Base.get("apis/apps/v1beta1/namespaces/" <> namespace <> "/deployments/" <> namespace)
-      
+
     processed = Base.process_response_status_code(body, status_code)
 
     # We need to process the result a bit to extract only the Namespace names
     case processed do
       {:ok, data} ->
-        deployments = Enum.reduce(data["items"], [],
-          fn(n), acc ->
-            [%{name: n["metadata"]["name"], namespace: n["metadata"]["namespace"]} | acc]
-          end
-        )
-        Logger.debug(inspect(deployments))
-        {:ok, deployments}
+        {:ok, processed}
       _ ->
         {:error, status_code}
     end
