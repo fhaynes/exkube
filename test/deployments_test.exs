@@ -10,6 +10,32 @@ defmodule Exkube.DeploymentsTest do
     result = Deployments.all
     assert elem(result, 0) == :ok
   end
+
+  test "can create deployment", %{} do
+    deployment = %{
+      "name": "elixir-test-deployment",
+      "labels": %{
+        "app": "elixir-test"
+      },
+      "replicas": 1,
+      "template_labels": %{
+        "app": "elixir-test",
+      },
+      "containers": [
+        %{
+          "name": "nginx",
+          "image": "nginx:1.7.9",
+          "ports": [
+            %{
+              "containerPort": 80
+            }
+          ]
+        }
+      ]
+    }
+    result = Deployments.create(deployment)
+    assert elem(result, 0) == :ok
+  end
   #
   # test "can get one namespace", %{} do
   #   result = Namespaces.one(%{namespace: "uops"})
